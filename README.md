@@ -128,3 +128,18 @@ This project represents, to the best of my knowledge, the first attempt to syste
 - **Playwright (Firefox)** — browser automation library used to scrape times data from SwimCloud's API. Required because SwimCloud is protected by Cloudflare, which blocks standard HTTP clients. A real Firefox instance with a persistent browser context is significantly harder to fingerprint as automated.
 - **Requests + BeautifulSoup** — used in early development for roster scraping before Cloudflare began returning 403 responses. BeautifulSoup handles HTML parsing of roster pages.
 - **osascript (Safari)** — Apple's scripting interface, used to pull HTML directly from an active Safari tab for roster pages. Even Playwright was blocked by Cloudflare Turnstile on these pages and Safari passes natively as a real browser with no automation fingerprint.
+
+## How to Run
+
+The database (`progression.db`) is included in the repository, so scraping is not required. To run the analysis:
+
+```bash
+git clone https://github.com/ianredmann/d2_swim_program_progression_analysis.git
+cd d2_swim_program_progression_analysis
+python3 -m venv .venv
+source .venv/bin/activate
+pip install playwright beautifulsoup4 requests
+python3 analysis.py
+```
+
+Note: the scraping scripts (`scraper.py`, `roster_scraper.py`) require a live SwimCloud session and are not reproducible without one. The dataset is final — see the Further Research section for context.
