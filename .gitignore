@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project-specific
+CLAUDE.md
+.CLAUDE.md.swp
+browser_data_firefox/
+.DS_Store
