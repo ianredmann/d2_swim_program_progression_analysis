@@ -1,3 +1,4 @@
+import statistics
 from db import get_connection
 
 def top5_avg_by_season(conn, swimmer_id, team_id):
@@ -26,6 +27,16 @@ def compute_progression(results):
     season_map = {row[0]: row[1] for row in results}
     seasons = qualifying_seasons(results)
     return season_map[seasons[-1]] - season_map[seasons[0]]
+
+def mean_and_stdev(values):
+    mean = sum(values) / len(values)
+    stdev = statistics.stdev(values) if len(values) > 1 else None
+    return mean, stdev
+
+def format_group_stats(values):
+    mean, stdev = mean_and_stdev(values)
+    stdev_str = f"{stdev:.1f}" if stdev is not None else "n/a"
+    return f"mean={mean:+.1f} pts, stdev={stdev_str} (n={len(values)})"
 
 if __name__ == "__main__":
     from cohort import COHORTS
@@ -61,23 +72,20 @@ if __name__ == "__main__":
         for name, prog in four_year:
             print(f"  {name}: {prog:+.1f} pts")
         if four_year:
-            mean = sum(p for _, p in four_year) / len(four_year)
-            print(f"  Group mean: {mean:+.1f} pts (n={len(four_year)})")
+            print(f"  Group {format_group_stats([p for _, p in four_year])}")
 
         print(f"\n--- {team_name} {cohort_year} {group_name} | 3-year ---")
         for name, prog in three_year:
             print(f"  {name}: {prog:+.1f} pts")
         if three_year:
-            mean = sum(p for _, p in three_year) / len(three_year)
-            print(f"  Group mean: {mean:+.1f} pts (n={len(three_year)})")
+            print(f"  Group {format_group_stats([p for _, p in three_year])}")
 
         combined = four_year + three_year
         print(f"\n--- {team_name} {cohort_year} {group_name} | 3+ year (combined, mixed window) ---")
         for name, prog in combined:
             print(f"  {name}: {prog:+.1f} pts")
         if combined:
-            mean = sum(p for _, p in combined) / len(combined)
-            print(f"  Group mean: {mean:+.1f} pts (n={len(combined)})")
+            print(f"  Group {format_group_stats([p for _, p in combined])}")
 
         if excluded:
             print(f"\n  Excluded/insufficient:")
@@ -94,8 +102,7 @@ if __name__ == "__main__":
     print("=" * 50)
     for (team_name, group_name), results in overall.items():
         if results:
-            mean = sum(p for _, p in results) / len(results)
-            print(f"  {team_name} {group_name}: {mean:+.1f} pts (n={len(results)})")
+            print(f"  {team_name} {group_name}: {format_group_stats([p for _, p in results])}")
 
     conn.close()
 

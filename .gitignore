@@ -221,4 +221,5 @@ __marimo__/
 CLAUDE.md
 .CLAUDE.md.swp
 browser_data_firefox/
+browser_data/
 .DS_Store
