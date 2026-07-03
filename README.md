@@ -40,8 +40,8 @@ A small cluster of swimmers sits well below the main mass on incoming talent, sp
 ## Technical Challenges
 
 - **Cloudflare blocked standard HTTP clients.** `requests` worked until Cloudflare started returning 403s by fingerprinting the client. Fixed by switching times-scraping to Playwright with a real Firefox instance and a persistent browser context.
-- **Even Playwright got blocked on roster pages.** Cloudflare Turnstile stopped Playwright specifically on HTML roster pages. Fixed by pulling roster HTML directly from an active Safari tab via `osascript` — a real, unautomated browser passes natively.
-- **SwimCloud's recruiting score (Power Index) isn't public data.** It disappears from a profile once a swimmer enrolls in college, and SwimCloud only documents part of its formula (the event-weighting, not the final percentile normalization). Rather than guess at the missing piece, this project built its own weighted composite from the documented part of the formula and stopped there — see [REPORT.md](REPORT.md#incoming-talent-proxy-power-index).
+- **Even Playwright got blocked on roster pages.** Cloudflare Turnstile stopped Playwright specifically on HTML roster pages. Fixed by pulling roster HTML directly from an active Safari tab via `osascript`, an unautomated browser passes natively.
+- **SwimCloud's recruiting score (Power Index) isn't public data.** It disappears from a profile once a swimmer enrolls in college, and SwimCloud only documents part of its formula (the event-weighting, not the final percentile normalization). Rather than guess at the missing piece, this project built its own weighted composite from the documented part of the formula and stopped there, see [REPORT.md](REPORT.md#incoming-talent-proxy-power-index).
 - **Respecting the scraping boundary.** After SwimCloud explicitly asked for scraping to stop, remaining data gaps (12 of 202 swimmers missing pre-college data) were left as a disclosed limitation rather than chased with more automated requests.
 
 ## Architecture
