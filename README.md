@@ -27,7 +27,7 @@
 | DSU | Women | 17 | -20.3 pts | 66.1 |
 | UWF | Women | 19 | -8.9 pts | 69.4 |
 
-Every group's standard deviation is roughly **3–4x its mean** — individual variability dwarfs the average signal. That's not a caveat tacked onto the results, it's the headline: at this sample size, a mean alone would be misleading, which is exactly why this project doesn't rank programs.
+Every group's standard deviation is roughly **3–4x its mean**, individual variability dwarfs the average signal. That's not a caveat tacked onto the results, at this sample size, a mean alone would be misleading, which is exactly why this project doesn't rank programs.
 
 ![Distribution of progression](progression_distribution.png)
 
@@ -35,7 +35,7 @@ To start pulling apart incoming talent from actual improvement, each swimmer's p
 
 ![Incoming talent vs. progression](incoming_vs_progression.png)
 
-A small cluster of swimmers sits well below the main mass on incoming talent — spot-checked by hand against SwimCloud and confirmed genuine, not a scraping artifact: some swimmers really do enter with a thin, weak pre-college record.
+A small cluster of swimmers sits well below the main mass on incoming talent, spot-checked by hand against SwimCloud and confirmed genuine, not a scraping artifact: some swimmers really do enter with a thin, weak pre-college record.
 
 ## Technical Challenges
 
@@ -64,7 +64,7 @@ flowchart TD
 
 - **Power points, not raw times** — a standardized scoring system so a 100 free and a 400 IM can be compared on one scale.
 - **Season-best times** — each season's score comes from a swimmer's fastest time per event that season, so freshman and senior scores are both drawn from tapered, peak-performance conditions.
-- **SCY-locked for the progression metric** (non-SCY swims dropped), but **all courses allowed for the incoming-talent proxy** — a deliberate, disclosed exception, since pre-college club seasons are frequently SCM/LCM-only.
+- **SCY-locked for the progression metric** (non-SCY swims dropped), but **all courses allowed for the incoming-talent proxy** which was a deliberate, disclosed exception, since pre-college club seasons are frequently SCM/LCM-only.
 - **Raw improvement, not value-added** — no baseline model is fit (not enough data), so incoming talent confounding is disclosed rather than corrected for.
 - **`INSERT OR IGNORE` everywhere** — every scraper is safely rerunnable without duplicating data.
 
@@ -72,7 +72,7 @@ Full reasoning for each decision, including the ones with real tradeoffs, is in 
 
 ## Limitations
 
-- **Incoming talent confounding** — raw improvement conflates coaching quality with recruiting strength; no value-added model is fit.
+- **Incoming talent confounding** — raw improvement conflates coaching quality with recruiting strength. No value-added model is fit.
 - **Incoming talent proxy ≠ SwimCloud's Power Index** — replicates the documented event-weighting, not the undocumented percentile normalization.
 - **12 of 202 swimmers (6%) missing pre-college data** — not aggressively chased, to avoid further automated requests after SwimCloud's warning.
 - **Event portfolio sensitivity** — a swimmer's score can shift from changing which events they swim, not just performance.
@@ -98,4 +98,4 @@ python3 plot_progression_distribution.py
 python3 plot_incoming_vs_progression.py
 ```
 
-Note: the scraping scripts (`scraper.py`, `scrape_incoming.py`, `roster_scraper.py`) require a live, logged-in SwimCloud session and Playwright's browser binaries (`playwright install firefox`), and are not reproducible without one. The dataset is final — see [REPORT.md](REPORT.md#what-it-would-take-to-do-this-properly) for why.
+Note: the scraping scripts (`scraper.py`, `scrape_incoming.py`, `roster_scraper.py`) require a live, logged-in SwimCloud session and Playwright's browser binaries (`playwright install firefox`), and are not reproducible without one. The dataset is final. See [REPORT.md](REPORT.md#what-it-would-take-to-do-this-properly) for why.
