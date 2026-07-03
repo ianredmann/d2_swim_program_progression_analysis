@@ -4,6 +4,15 @@
 
 **This is a proof of concept, not a finding.** It's scoped to three conference programs I could verify by hand — Ouachita Baptist, Henderson State, and Delta State, plus the University of West Florida — across the 2019–2022 entering classes. The pipeline works end to end and the methodology is sound, but the sample (7 team/gender groups, 12–27 swimmers each) is too small to rank anything. SwimCloud has since asked that scraping stop, so this dataset is final. See [REPORT.md](REPORT.md) for the full write-up, every design decision, and complete results.
 
+## Tech Stack
+
+- **Python** — primary language for the full pipeline: scraping, database management, and analysis.
+- **SQLite (via sqlite3)** — lightweight relational database used to store swimmer and times data. Chosen because the dataset is small, and does not require a server.
+- **Playwright (Firefox)** — browser automation library used to scrape times data from SwimCloud's API. Required because SwimCloud is protected by Cloudflare, which blocks standard HTTP clients.
+- **BeautifulSoup** — HTML parsing for roster pages.
+- **osascript (Safari)** — Apple's scripting interface, used to pull roster HTML directly from an active Safari tab, since even Playwright was blocked by Cloudflare Turnstile on those pages.
+- **matplotlib** — static charts (progression distribution, incoming talent vs. progression) for this README.
+
 ## Key Findings
 
 **Overall progression, all cohorts combined** (change in top-5-avg SCY power points, freshman → final qualifying season):
@@ -73,15 +82,6 @@ Full reasoning for each decision, including the ones with real tradeoffs, is in 
 - **Small samples, with the variance to prove it** — stdev is routinely 3–4x the mean; do not rank programs from this data.
 
 Full detail on every limitation is in [REPORT.md](REPORT.md#limitations).
-
-## Tech Stack
-
-- **Python** — primary language for the full pipeline: scraping, database management, and analysis.
-- **SQLite (via sqlite3)** — lightweight relational database used to store swimmer and times data. Chosen because the dataset is small, and does not require a server.
-- **Playwright (Firefox)** — browser automation library used to scrape times data from SwimCloud's API. Required because SwimCloud is protected by Cloudflare, which blocks standard HTTP clients.
-- **BeautifulSoup** — HTML parsing for roster pages.
-- **osascript (Safari)** — Apple's scripting interface, used to pull roster HTML directly from an active Safari tab, since even Playwright was blocked by Cloudflare Turnstile on those pages.
-- **matplotlib** — static charts (progression distribution, incoming talent vs. progression) for this README.
 
 ## How to Run
 
